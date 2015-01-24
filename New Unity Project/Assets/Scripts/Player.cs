@@ -16,11 +16,15 @@ public class Player : MonoBehaviour
 	public float Sensitivity = 2;
 	public bool Sprint;
 	float SprintBoost = 1;
+    public bool UIShowing;
 	public Camera _Camera;
 	public CameraMovement _Movement;
+    public GameObject _Canvas;
+
 	// Use this for initialization
 	void Start () 
 	{
+        UIShowing = false;
 		rigidbody.freezeRotation = true;
 	}
 	
@@ -67,6 +71,8 @@ public class Player : MonoBehaviour
 		}
 
 		Grounded = false;
+
+        _Canvas.SetActive(UIShowing);
 	}
 
 	void OnCollisionStay(Collision other)
@@ -79,6 +85,22 @@ public class Player : MonoBehaviour
 		return Mathf.Sqrt (JumpSpeed * 2 * -Physics.gravity.y);
 	}
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "AI")
+        {
+            UIShowing = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "AI")
+        {
+            UIShowing = false;
+        }
+    }
+
 	void OnTriggerStay(Collider other)
 	{
 		Debug.Log (other.GetComponent<AI> ().Source.isPlaying);
@@ -87,6 +109,7 @@ public class Player : MonoBehaviour
 
 			if(Input.GetKeyDown(KeyCode.E))
 			{
+                UIShowing = false;
 				if(!other.GetComponent<AI>().Source.isPlaying)
 				{
 					other.GetComponent<AI>().PlayRandomSpeech();
