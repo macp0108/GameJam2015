@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+
         UIShowing = false;
 		rigidbody.freezeRotation = true;
 	}
@@ -72,7 +73,7 @@ public class Player : MonoBehaviour
 
 		Grounded = false;
 
-        _Canvas.SetActive(UIShowing);
+       _Canvas.SetActive(UIShowing);
 	}
 
 	void OnCollisionStay(Collision other)
@@ -118,4 +119,10 @@ public class Player : MonoBehaviour
 			
 		}
 	}
+
+
+    void RandomizeUI()
+    {
+        int randomnum = Random.Range(1, 4);
+    }
 }
