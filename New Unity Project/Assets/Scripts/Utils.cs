@@ -10,7 +10,7 @@ public class Utils : MonoBehaviour
 	public static void LoadAudioClip()
 	{
 		string ResoursesPath = "WavVoices/Clip";
-		for(int i = 0; i < 31; i++)
+		for(int i = 0; i < 51; i++)
 		{
 			Debug.Log("AddedAudioClip");
 			AudioClip clip = (AudioClip)Resources.Load(ResoursesPath + i.ToString(), typeof(AudioClip)); 
