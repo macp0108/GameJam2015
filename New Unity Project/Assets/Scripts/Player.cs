@@ -7,9 +7,10 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour 
 {
-	public float Speed = 10.0f;
+	public float Speed = 5.0f;
 	public bool CanJump = true;
 	public bool Grounded;
+	public bool Interact;
 	public float JumpSpeed = 2;
 	public float MaxVelocity = 10;
 	public float Sensitivity = 2;
@@ -26,20 +27,20 @@ public class Player : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		Vector3 TargetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		TargetVelocity = transform.TransformDirection (TargetVelocity);
+		TargetVelocity *= (Speed * SprintBoost);
+		
+		Vector3 CurrentVelocity = rigidbody.velocity;
+		Vector3 ChangeVelocity = (TargetVelocity - CurrentVelocity);
+		ChangeVelocity.x = Mathf.Clamp (ChangeVelocity.x, -MaxVelocity, MaxVelocity);
+		ChangeVelocity.z = Mathf.Clamp (ChangeVelocity.z, -MaxVelocity, MaxVelocity);
+		ChangeVelocity.y = 0;
+		
+		rigidbody.AddForce (ChangeVelocity, ForceMode.VelocityChange);
+
 		if(Grounded)
 		{
-			Vector3 TargetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			TargetVelocity = transform.TransformDirection (TargetVelocity);
-			TargetVelocity *= (Speed * SprintBoost);
-
-			Vector3 CurrentVelocity = rigidbody.velocity;
-			Vector3 ChangeVelocity = (TargetVelocity - CurrentVelocity);
-			ChangeVelocity.x = Mathf.Clamp (ChangeVelocity.x, -MaxVelocity, MaxVelocity);
-			ChangeVelocity.z = Mathf.Clamp (ChangeVelocity.z, -MaxVelocity, MaxVelocity);
-			ChangeVelocity.y = 0;
-
-			rigidbody.AddForce (ChangeVelocity, ForceMode.VelocityChange);
-
 			if(CanJump && Input.GetButtonDown("Jump"))
 			{
 				rigidbody.velocity = new Vector3(CurrentVelocity.x,CalcJumpVelocity(),CurrentVelocity.z);
@@ -80,12 +81,18 @@ public class Player : MonoBehaviour
 
 	void OnTriggerStay(Collider other)
 	{
+		Debug.Log (other.GetComponent<AI> ().Source.isPlaying);
 		if(other.tag == "AI")
 		{
+
 			if(Input.GetKeyDown(KeyCode.E))
 			{
-				other.GetComponent<AI>().PlayRandomSpeech();
+				if(!other.GetComponent<AI>().Source.isPlaying)
+				{
+					other.GetComponent<AI>().PlayRandomSpeech();
+				}
 			}
+			
 		}
 	}
 }
