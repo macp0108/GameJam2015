@@ -18,6 +18,7 @@ public class AI : MonoBehaviour
 	public MoveStates _CurrentState;
 	float pauseTimer = 2.0f;
 	public GameObject _Ragdoll;
+	public GameObject[] Hatz;
 	// Use this for initialization
 	void Start () 
 	{
@@ -26,9 +27,12 @@ public class AI : MonoBehaviour
 		_Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player>();
 		Source = GetComponent<AudioSource> ();
 		Utils.LoadAudioClip ();
+		Utils.LoadAllPlayerTextures ();
 		transform.position = _Paths[Random.Range(0,_Paths.Count)].transform.position;
 		Anim = GetComponent<Animator> ();
 		_CurrentState = MoveStates.Walk;
+		transform.GetChild (0).renderer.material.mainTexture = Utils.PickRandomPlayerTexture ();
+		Hatz[Random.Range(0,Hatz.Length)].SetActive(true);
 	}
 	
 	// Update is called once per frame
@@ -157,6 +161,16 @@ public class AI : MonoBehaviour
 				GameObject doll = (GameObject)Instantiate(_Ragdoll);
 				Ragdoll ragdoll = doll.GetComponent<Ragdoll>();
 				ragdoll.SetUpRagdoll(transform.GetChild(0).renderer.material.mainTexture,transform);
+				for(int i = 0; i < Hatz.Length; i++)
+				{
+					if(Hatz[i].activeSelf == true)
+					{
+						Hatz[i].transform.parent = null;
+						Hatz[i].rigidbody.useGravity = true;
+						Hatz[i].rigidbody.isKinematic = false;
+						Hatz[i].GetComponent<BoxCollider>().isTrigger = false;
+					}
+				}
 				gameObject.SetActive(false);
 			}
 		}

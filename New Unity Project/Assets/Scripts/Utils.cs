@@ -7,7 +7,7 @@ public class Utils : MonoBehaviour
 {
 	static List<AudioClip> AllAudioClips = new List<AudioClip> ();
 	static List<Texture> AllGUITexts = new List<Texture> (); 
-
+	static List<Texture> AllPlayerTextures = new List<Texture>();
 
 	public static void LoadAudioClip()
 	{
@@ -39,8 +39,24 @@ public class Utils : MonoBehaviour
 
 	public static Texture DisplayRandomGUI()
 	{
-		Debug.Log (AllGUITexts.Count);
 		int numberGUI = Random.Range (0, AllGUITexts.Count); 
 		return AllGUITexts [numberGUI]; 
+	}
+
+	public static void LoadAllPlayerTextures()
+	{
+		string ResoursesPath = "PlayerTextures/Text";
+		for(int i = 0; i < 1; i++)
+		{
+			Texture PlayerText = (Texture)Resources.Load(ResoursesPath + i.ToString(), typeof(Texture));
+			AllPlayerTextures.Add(PlayerText);
+			ResoursesPath = "PlayerTextures/Text";
+		}
+	}
+
+	public static Texture PickRandomPlayerTexture()
+	{
+		int numberGUI = 0; 
+		return AllPlayerTextures [numberGUI]; 
 	}
 }

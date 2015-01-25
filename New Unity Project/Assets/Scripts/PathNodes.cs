@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PathNodes : MonoBehaviour {
 	
-	bool HasPlayer;
+	public bool HasPlayer = false;
 	// Use this for initialization
 	void Start () 
 	{
@@ -14,5 +14,10 @@ public class PathNodes : MonoBehaviour {
 	void Update () 
 	{
 		GetComponent<MeshRenderer> ().enabled = false;
+	}
+
+	public void HasSpawnedPlayer(bool spawned)
+	{
+		HasPlayer = spawned;
 	}
 }
