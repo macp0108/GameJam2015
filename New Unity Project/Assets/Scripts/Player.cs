@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public bool UIShowing;
 	public Camera _Camera;
 	public CameraMovement _Movement;
-    public GameObject _Canvas;
+    //public GameObject _Canvas;
 	public GUITexture _PressE; 
 
 	// Use this for initialization
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
 
 		Grounded = false;
 
-       _Canvas.SetActive(UIShowing);
+       _PressE.enabled = UIShowing;
 	}
 
 	void OnCollisionStay(Collision other)
@@ -87,16 +87,7 @@ public class Player : MonoBehaviour
 		return Mathf.Sqrt (JumpSpeed * 2 * -Physics.gravity.y);
 	}
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "AI")
-        {
-            UIShowing = true;
-			_PressE.renderer.material.mainTexture = Utils.DisplayRandomGUI(); 
-        }
 
-
-    }
 
     void OnTriggerExit(Collider other)
     {
@@ -112,6 +103,14 @@ public class Player : MonoBehaviour
 		if(other.tag == "AI")
 		{
 
+			if( !UIShowing)
+			{
+				_PressE.texture = Utils.DisplayRandomGUI(); 
+				_PressE.pixelInset = new Rect(_Camera.pixelRect.center.x, _Camera.pixelRect.center.y,0,-_PressE.texture.height * 18 );
+				
+			}
+
+			UIShowing = true;
 			if(Input.GetKeyDown(KeyCode.E))
 			{
                 UIShowing = false;

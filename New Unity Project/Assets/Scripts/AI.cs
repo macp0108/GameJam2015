@@ -16,7 +16,7 @@ public class AI : MonoBehaviour
 	Vector3 Direction;
 	Quaternion LookRotation;
 	Animator Anim;
-	MoveStates _CurrentState;
+	public MoveStates _CurrentState;
 	float pauseTimer = 2.0f;
 	// Use this for initialization
 	void Start () 
@@ -46,8 +46,13 @@ public class AI : MonoBehaviour
 		case MoveStates.Walk:
 			UpdateWalk();
 			break;
-
 		}
+
+		if(pauseTimer > 0.0f)
+		{
+			pauseTimer -= Time.deltaTime;
+		}
+
 
 
 		UpdateAnimations ();
@@ -93,14 +98,29 @@ public class AI : MonoBehaviour
 
 	void UpdateIdle()
 	{
+		if(pauseTimer <= 0.0f)
+		{
+			Direction = (navMesh.pathEndPosition - transform.position).normalized;
+			LookRotation = Quaternion.LookRotation(Direction);
+			transform.rotation = Quaternion.Slerp(transform.rotation, LookRotation, Time.deltaTime * 2);
 
+			if(Vector3.Dot(navMesh.pathEndPosition - transform.position, transform.forward) < 0.1f)
+			{
+				_CurrentState = MoveStates.Walk;
+			}
+		}
 	}
 
 	void UpdateWalk()
 	{
-		if(navMesh.pathEndPosition == transform.position)
+		if(navMesh.destination == transform.position)
 		{
 			pauseTimer = Random.Range(1,4);
+			_CurrentState = MoveStates.Idle;
+		}
+		else
+		{
+			navMesh.SetDestination(_Paths[Random.Range(0, _Paths.Count)].transform.position);
 		}
 	}
 
@@ -117,6 +137,7 @@ public class AI : MonoBehaviour
 			Direction = (other.transform.position - transform.position).normalized;
 			LookRotation = Quaternion.LookRotation(Direction);
 			transform.rotation = Quaternion.Slerp(transform.rotation, LookRotation, Time.deltaTime * 2);
+			_CurrentState = MoveStates.Talk;
 		}
 	}
 	void OnTriggerExit(Collider other)
@@ -127,7 +148,7 @@ public class AI : MonoBehaviour
 		}
 	}
 
-	enum MoveStates
+	public enum MoveStates
 	{
 		Idle,
 		Walk,
