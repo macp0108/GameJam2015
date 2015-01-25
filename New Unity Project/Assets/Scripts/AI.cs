@@ -15,6 +15,9 @@ public class AI : MonoBehaviour
 	List<GameObject> _Paths = new List<GameObject>();
 	Vector3 Direction;
 	Quaternion LookRotation;
+	Animator Anim;
+	MoveStates _CurrentState;
+	float pauseTimer = 2.0f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -24,15 +27,30 @@ public class AI : MonoBehaviour
 		Source = GetComponent<AudioSource> ();
 		Utils.LoadAudioClip ();
 		transform.position = _Paths[Random.Range(0,_Paths.Count)].transform.position;
+		Anim = GetComponent<Animator> ();
+		_CurrentState = MoveStates.Walk;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(!navMesh.hasPath)
+
+		switch(_CurrentState)
 		{
-			navMesh.SetDestination(_Paths[Random.Range(0,_Paths.Count)].transform.position);
+		case MoveStates.Idle:
+			UpdateIdle();
+			break;
+		case MoveStates.Talk:
+			UpdateTalk();
+			break;
+		case MoveStates.Walk:
+			UpdateWalk();
+			break;
+
 		}
+
+
+		UpdateAnimations ();
 	}
 
 	public void PlayRandomSpeech()
@@ -52,6 +70,45 @@ public class AI : MonoBehaviour
 		}
 	}
 
+	void UpdateAnimations()
+	{
+//		if(!navMesh.hasPath)
+//		{
+//			Anim.SetBool("CanWalk",false);
+//		}
+//		else
+//		{
+//			Anim.SetBool("CanWalk",true);
+//		}
+//
+//		if(!Anim.GetBool("CanWalk"))
+//		{
+//			Anim.SetFloat("Idle",Random.Range(0,2));
+//		}
+//		else
+//		{
+//			Anim.SetFloat("Idle", -);
+//		}
+	}
+
+	void UpdateIdle()
+	{
+
+	}
+
+	void UpdateWalk()
+	{
+		if(navMesh.pathEndPosition == transform.position)
+		{
+			pauseTimer = Random.Range(1,4);
+		}
+	}
+
+	void UpdateTalk()
+	{
+
+	}
+
 	void OnTriggerStay(Collider other)
 	{
 		if(other.tag == "Player")
@@ -68,6 +125,13 @@ public class AI : MonoBehaviour
 		{
 			navMesh.Resume();
 		}
+	}
+
+	enum MoveStates
+	{
+		Idle,
+		Walk,
+		Talk
 	}
 
 }

@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public bool UIShowing;
 	public Camera _Camera;
 	public CameraMovement _Movement;
-    public GameObject _Canvas;
+	GameObject _Canvas;
 
 	// Use this for initialization
 	void Start () 
@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 				rigidbody.velocity = new Vector3(CurrentVelocity.x,CalcJumpVelocity(),CurrentVelocity.z);
 			}
 		}
+
+
 
 		if(Input.GetKeyDown(KeyCode.LeftShift) && !Sprint)
 		{

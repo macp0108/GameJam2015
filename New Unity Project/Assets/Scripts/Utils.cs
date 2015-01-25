@@ -7,6 +7,7 @@ public class Utils : MonoBehaviour
 {
 	static List<AudioClip> AllAudioClips = new List<AudioClip> ();
 
+
 	public static void LoadAudioClip()
 	{
 		string ResoursesPath = "WavVoices/Clip";
