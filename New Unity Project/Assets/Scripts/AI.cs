@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
 	public AudioClip RandomClip;
 	AudioClip Speech;
 	Player _Player;
-	public GameObject SpawnParent;
+	GameObject SpawnParent;
 	List<GameObject> _Paths = new List<GameObject>();
 	Vector3 Direction;
 	Quaternion LookRotation;
@@ -19,16 +19,18 @@ public class AI : MonoBehaviour
 	float pauseTimer = 2.0f;
 	public GameObject _Ragdoll;
 	public GameObject[] Hatz;
+	float walkRadius = 10.0f;
+	bool DoWaypoints = true;
 	// Use this for initialization
 	void Start () 
 	{
+		SpawnParent = GameObject.Find("SpawnPoints");
 		AddNodeS ();
 		navMesh = GetComponent<NavMeshAgent> ();
 		_Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player>();
 		Source = GetComponent<AudioSource> ();
 		Utils.LoadAudioClip ();
 		Utils.LoadAllPlayerTextures ();
-		transform.position = _Paths[Random.Range(0,_Paths.Count)].transform.position;
 		Anim = GetComponent<Animator> ();
 		_CurrentState = MoveStates.Walk;
 		transform.GetChild (0).renderer.material.mainTexture = Utils.PickRandomPlayerTexture ();
@@ -39,27 +41,37 @@ public class AI : MonoBehaviour
 	void Update () 
 	{
 
-		switch(_CurrentState)
-		{
-		case MoveStates.Idle:
-			UpdateIdle();
-			break;
-		case MoveStates.Talk:
-			UpdateTalk();
-			break;
-		case MoveStates.Walk:
-			UpdateWalk();
-			break;
-		}
-
-		if(pauseTimer > 0.0f)
+		if(!DoWaypoints)
 		{
 			pauseTimer -= Time.deltaTime;
+			if( pauseTimer <= 0.0f)
+			{
+				DoWaypoints = true;
+			}
 		}
 
-
+		if (DoWaypoints == true)
+		{
+			float dist = GetComponent<NavMeshAgent>().remainingDistance; 
+			if (dist!=Mathf.Infinity && GetComponent<NavMeshAgent>().pathStatus== NavMeshPathStatus.PathComplete && GetComponent<NavMeshAgent>().remainingDistance==0)//Arrived.
+			{
+				pauseTimer = Random.Range(3, 15);
+				DoWaypoints = false;
+				Wonder();
+			}
+		}
 
 		UpdateAnimations ();
+	}
+
+	void Wonder()
+	{
+		Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
+		randomDirection += transform.position;
+		NavMeshHit hit;
+		NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
+		Vector3 finalPosition = hit.position;
+		GetComponent<NavMeshAgent>().destination = finalPosition;
 	}
 
 	public void PlayRandomSpeech()
@@ -81,23 +93,14 @@ public class AI : MonoBehaviour
 
 	void UpdateAnimations()
 	{
-//		if(!navMesh.hasPath)
-//		{
-//			Anim.SetBool("CanWalk",false);
-//		}
-//		else
-//		{
-//			Anim.SetBool("CanWalk",true);
-//		}
-//
-//		if(!Anim.GetBool("CanWalk"))
-//		{
-//			Anim.SetFloat("Idle",Random.Range(0,2));
-//		}
-//		else
-//		{
-//			Anim.SetFloat("Idle", -);
-//		}
+		if(!DoWaypoints)
+		{
+			Anim.SetBool("CanWalk",false);
+		}
+		else
+		{
+			Anim.SetBool("CanWalk",true);
+		}
 	}
 
 	void UpdateIdle()
@@ -124,7 +127,7 @@ public class AI : MonoBehaviour
 		}
 		else
 		{
-			navMesh.SetDestination(_Paths[Random.Range(0, _Paths.Count)].transform.position);
+			//navMesh.SetDestination(_Paths[Random.Range(0, _Paths.Count)].transform.position);
 		}
 	}
 

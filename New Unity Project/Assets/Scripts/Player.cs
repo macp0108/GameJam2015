@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
 
 	void OnTriggerStay(Collider other)
 	{
-		Debug.Log (other.GetComponent<AI> ().Source.isPlaying);
+//		Debug.Log (other.GetComponent<AI> ().Source.isPlaying);
 		if(other.tag == "AI")
 		{
 
