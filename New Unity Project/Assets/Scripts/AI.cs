@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(CharacterController))]
 public class AI : MonoBehaviour 
 {
 	NavMeshAgent navMesh;
@@ -18,6 +17,7 @@ public class AI : MonoBehaviour
 	Animator Anim;
 	public MoveStates _CurrentState;
 	float pauseTimer = 2.0f;
+	public GameObject _Ragdoll;
 	// Use this for initialization
 	void Start () 
 	{
@@ -145,6 +145,20 @@ public class AI : MonoBehaviour
 		if(other.tag == "Player")
 		{
 			navMesh.Resume();
+		}
+	}
+
+	void OnCollisionEnter(Collision other)
+	{
+		if(other.gameObject.tag == "Player")
+		{
+			if(other.gameObject.GetComponent<Player>().Sprint)
+			{
+				GameObject doll = (GameObject)Instantiate(_Ragdoll);
+				Ragdoll ragdoll = doll.GetComponent<Ragdoll>();
+				ragdoll.SetUpRagdoll(transform.GetChild(0).renderer.material.mainTexture,transform);
+				gameObject.SetActive(false);
+			}
 		}
 	}
 

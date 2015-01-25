@@ -51,6 +51,8 @@
      <Compile Include="Assets\Scripts\CharacterControl.cs" />
      <Compile Include="Assets\Scripts\PathNodes.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Ragdoll.cs" />
+     <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\Utils.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />

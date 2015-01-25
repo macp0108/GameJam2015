@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PathNodes : MonoBehaviour {
 	
-
+	bool HasPlayer;
 	// Use this for initialization
 	void Start () 
 	{
