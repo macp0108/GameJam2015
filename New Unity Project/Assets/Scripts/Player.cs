@@ -20,11 +20,12 @@ public class Player : MonoBehaviour
 	public Camera _Camera;
 	public CameraMovement _Movement;
     public GameObject _Canvas;
+	public GUITexture _PressE; 
 
 	// Use this for initialization
 	void Start () 
 	{
-
+		Utils.LoadGuiTextures (); 
         UIShowing = false;
 		rigidbody.freezeRotation = true;
 	}
@@ -91,7 +92,10 @@ public class Player : MonoBehaviour
         if (other.tag == "AI")
         {
             UIShowing = true;
+			_PressE.renderer.material.mainTexture = Utils.DisplayRandomGUI(); 
         }
+
+
     }
 
     void OnTriggerExit(Collider other)
@@ -125,4 +129,9 @@ public class Player : MonoBehaviour
     {
         int randomnum = Random.Range(1, 4);
     }
+
+	void OnGUI()
+	{
+		//GUI.DrawTexture(new Rect(10, 10, 60, 60), _PressE, ScaleMode.ScaleToFit, true, 10.0F);
+	}
 }
