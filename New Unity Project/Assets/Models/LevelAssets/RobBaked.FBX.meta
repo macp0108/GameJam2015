@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: a4bbb4551401da541a772a47db005291
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Box001
+    100002: MarineHead
+    100004: MarineLAnkle
+    100006: MarineLCalf
+    100008: MarineLCollarbone
+    100010: MarineLDigit01
+    100012: MarineLDigit02
+    100014: MarineLDigit11
+    100016: MarineLDigit31
+    100018: MarineLForearm1
+    100020: MarineLForearm2
+    100022: MarineLPalm
+    100024: MarineLThigh
+    100026: MarineLToe
+    100028: MarineLUpperarm
+    100030: MarineNeck1
+    100032: MarineNeck2
+    100034: MarinePelvis
+    100036: MarineRAnkle
+    100038: MarineRCalf
+    100040: MarineRCollarbone
+    100042: MarineRDigit01
+    100044: MarineRDigit02
+    100046: MarineRDigit11
+    100048: MarineRDigit31
+    100050: MarineRForearm1
+    100052: MarineRForearm2
+    100054: MarineRibcage
+    100056: MarineRPalm
+    100058: MarineRShoulderblade
+    100060: MarineRShoulderblade 1
+    100062: MarineRThigh
+    100064: MarineRToe
+    100066: MarineRUpperarm
+    100068: MarineSpine1
+    100070: MarineSpine2
+    100072: MarineSpine3
+    100074: //RootNode
+    400000: Box001
+    400002: MarineHead
+    400004: MarineLAnkle
+    400006: MarineLCalf
+    400008: MarineLCollarbone
+    400010: MarineLDigit01
+    400012: MarineLDigit02
+    400014: MarineLDigit11
+    400016: MarineLDigit31
+    400018: MarineLForearm1
+    400020: MarineLForearm2
+    400022: MarineLPalm
+    400024: MarineLThigh
+    400026: MarineLToe
+    400028: MarineLUpperarm
+    400030: MarineNeck1
+    400032: MarineNeck2
+    400034: MarinePelvis
+    400036: MarineRAnkle
+    400038: MarineRCalf
+    400040: MarineRCollarbone
+    400042: MarineRDigit01
+    400044: MarineRDigit02
+    400046: MarineRDigit11
+    400048: MarineRDigit31
+    400050: MarineRForearm1
+    400052: MarineRForearm2
+    400054: MarineRibcage
+    400056: MarineRPalm
+    400058: MarineRShoulderblade
+    400060: MarineRShoulderblade 1
+    400062: MarineRThigh
+    400064: MarineRToe
+    400066: MarineRUpperarm
+    400068: MarineSpine1
+    400070: MarineSpine2
+    400072: MarineSpine3
+    400074: //RootNode
+    4300000: Box001
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Box001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
